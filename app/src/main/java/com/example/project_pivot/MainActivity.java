@@ -158,8 +158,8 @@ public class MainActivity extends AppCompatActivity {
                 
                 imageAnalysis.setAnalyzer(backgroundHandler::post, this::analyzeImage);
                 
-                // Camera selector
-                CameraSelector cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA;
+                // Camera selector - Use front camera for pose classification
+                CameraSelector cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA;
                 
                 // Unbind use cases before rebinding
                 cameraProvider.unbindAll();

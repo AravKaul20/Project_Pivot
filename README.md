@@ -1,6 +1,39 @@
-# PROJECT_PIVOT - Real-time Pose Classification Android App
+# 🥊 PROJECT_PIVOT
 
-An Android application that performs real-time stance and execution classification using quantized ONNX models and CameraX.
+<div align="center">
+  <img src="app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp" alt="PROJECT_PIVOT Logo" width="120" height="120">
+  
+  **Real-time Boxing Training with AI-Powered Pose Analysis**
+  
+  [![Android](https://img.shields.io/badge/Platform-Android-green.svg)](https://android.com)
+  [![API](https://img.shields.io/badge/API-24%2B-brightgreen.svg)](https://android-arsenal.com/api?level=24)
+  [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+  [![Build Status](https://img.shields.io/badge/Build-Passing-success.svg)](https://github.com/AravKaul20/Project_Pivot)
+  
+  *Transform your boxing training with real-time AI feedback*
+</div>
+
+---
+
+## 📖 Overview
+
+PROJECT_PIVOT is a cutting-edge Android application that revolutionizes boxing training through real-time pose analysis. Using advanced machine learning models and computer vision, it provides instant feedback on your boxing stance and execution, helping you perfect your technique like never before.
+
+## 📋 Table of Contents
+
+- [🚀 Features](#-features)
+- [📱 Screenshots](#-screenshots)
+- [🏗️ Architecture](#️-architecture)
+- [🛠️ Setup & Build](#️-setup--build)
+- [📋 Permissions](#-permissions)
+- [🎯 Usage](#-usage)
+- [🔧 Technical Details](#-technical-details)
+- [🚧 Future Enhancements](#-future-enhancements)
+- [🧪 Testing](#-testing)
+- [🐛 Troubleshooting](#-troubleshooting)
+- [📊 Model Details](#-model-details)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
 
 ## 🚀 Features
 
@@ -173,14 +206,76 @@ adb shell top | grep project_pivot
 - ReLU activation, dropout regularization
 - Binary classification output
 
-## 📄 License
-
-This project is part of PROJECT_PIVOT academic research. All rights reserved.
-
 ## 🤝 Contributing
 
-This is a research project. For questions or collaboration opportunities, please contact the development team.
+We welcome contributions to PROJECT_PIVOT! Whether you're fixing bugs, adding features, or improving documentation, your help is appreciated.
+
+### How to Contribute
+
+1. **Fork the repository**
+2. **Create a feature branch** (`git checkout -b feature/amazing-feature`)
+3. **Commit your changes** (`git commit -m 'Add some amazing feature'`)
+4. **Push to the branch** (`git push origin feature/amazing-feature`)
+5. **Open a Pull Request**
+
+Please read our [Contributing Guidelines](CONTRIBUTING.md) for detailed information about our development process, coding standards, and how to submit pull requests.
+
+### Development Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/AravKaul20/Project_Pivot.git
+cd Project_Pivot
+
+# Open in Android Studio
+# File → Open → Select the project directory
+```
+
+### Areas We Need Help With
+
+- 🐛 **Bug fixes** - Help us identify and fix issues
+- 🚀 **Performance optimizations** - Improve app speed and efficiency
+- 🎨 **UI/UX improvements** - Make the app more beautiful and user-friendly
+- 📱 **Device compatibility** - Test on different Android devices
+- 🧪 **Testing** - Add unit tests and integration tests
+- 📚 **Documentation** - Improve guides and API documentation
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+```
+MIT License
+
+Copyright (c) 2025 Arav Kaul - PROJECT_PIVOT
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
 
 ---
 
-**Built with ❤️ using Android Studio, ONNX Runtime, and CameraX** 
+<div align="center">
+  
+  **Built with ❤️ using Android Studio, ONNX Runtime, and CameraX**
+  
+  [⭐ Star this project](https://github.com/AravKaul20/Project_Pivot) • [🐛 Report Bug](https://github.com/AravKaul20/Project_Pivot/issues) • [✨ Request Feature](https://github.com/AravKaul20/Project_Pivot/issues)
+  
+  Made by [Arav Kaul](https://github.com/AravKaul20) with passion for boxing and AI 🥊🤖
+  
+</div> 

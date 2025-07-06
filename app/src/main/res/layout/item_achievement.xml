@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/achievementCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    app:cardBackgroundColor="@color/background_secondary"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="20dp">
+
+        <!-- Icon -->
+        <TextView
+            android:id="@+id/iconText"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:text="🏆"
+            android:textSize="24sp"
+            android:gravity="center"
+            android:background="@drawable/feature_icon_bg"
+            android:layout_marginEnd="16dp" />
+
+        <!-- Content -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <!-- Title and Category -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="4dp">
+
+                <TextView
+                    android:id="@+id/titleText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Achievement Title"
+                    android:textSize="16sp"
+                    android:textColor="@color/text_primary"
+                    android:fontFamily="monospace"
+                    android:textStyle="bold"
+                    tools:text="First Steps" />
+
+                <TextView
+                    android:id="@+id/categoryText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CATEGORY"
+                    android:textSize="10sp"
+                    android:textColor="@color/accent_green"
+                    android:fontFamily="monospace"
+                    android:textStyle="bold"
+                    android:background="@drawable/mode_indicator_bg"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="2dp"
+                    tools:text="MILESTONE" />
+
+            </LinearLayout>
+
+            <!-- Description -->
+            <TextView
+                android:id="@+id/descriptionText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Achievement description goes here"
+                android:textSize="12sp"
+                android:textColor="@color/text_secondary"
+                android:fontFamily="monospace"
+                android:layout_marginBottom="12dp"
+                tools:text="Complete your first workout session" />
+
+            <!-- Progress Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:id="@+id/progressText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="0 / 1"
+                    android:textSize="12sp"
+                    android:textColor="@color/text_secondary"
+                    android:fontFamily="monospace"
+                    tools:text="1 / 1" />
+
+                <TextView
+                    android:id="@+id/rewardText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="50 XP"
+                    android:textSize="11sp"
+                    android:textColor="@color/accent_green"
+                    android:fontFamily="monospace"
+                    android:textStyle="bold"
+                    tools:text="100 XP" />
+
+            </LinearLayout>
+
+            <!-- Progress Bar -->
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="6dp"
+                android:progressTint="@color/accent_green"
+                android:progressBackgroundTint="@color/background_tertiary"
+                android:progress="0"
+                android:layout_marginBottom="8dp"
+                tools:progress="100" />
+
+            <!-- Unlocked Date (only visible when unlocked) -->
+            <TextView
+                android:id="@+id/unlockedDateText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Unlocked Dec 15, 2024"
+                android:textSize="10sp"
+                android:textColor="@color/accent_green"
+                android:fontFamily="monospace"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+        </LinearLayout>
+
+        <!-- Unlocked Indicator -->
+        <View
+            android:id="@+id/unlockedIndicator"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:background="@drawable/ic_project_pivot_logo"
+            android:backgroundTint="@color/accent_green"
+            android:layout_marginStart="12dp"
+            android:layout_gravity="top"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+    </LinearLayout>
+
+    <!-- Locked Overlay -->
+    <View
+        android:id="@+id/lockedOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+</androidx.cardview.widget.CardView> 

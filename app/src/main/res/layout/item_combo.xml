@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/comboCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    app:cardBackgroundColor="@color/background_secondary"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="20dp">
+
+        <!-- Play Button -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/playButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:cardBackgroundColor="@color/accent_green"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="0dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:layout_marginEnd="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="▶"
+                android:textSize="18sp"
+                android:textColor="@color/background_primary"
+                android:gravity="center"
+                android:textStyle="bold" />
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- Content -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <!-- ID and Difficulty -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:id="@+id/comboIdText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="COMBO_001"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_secondary"
+                    android:fontFamily="monospace"
+                    android:textStyle="bold"
+                    tools:text="COMBO_042" />
+
+                <TextView
+                    android:id="@+id/difficultyText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="BEGINNER"
+                    android:textSize="10sp"
+                    android:textColor="@color/accent_green"
+                    android:fontFamily="monospace"
+                    android:textStyle="bold"
+                    android:background="@drawable/mode_indicator_bg"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="2dp"
+                    tools:text="INTERMEDIATE" />
+
+            </LinearLayout>
+
+            <!-- Combo Sequence -->
+            <TextView
+                android:id="@+id/comboSequenceText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Jab → Cross → L-Hook → R-Hook"
+                android:textSize="16sp"
+                android:textColor="@color/text_primary"
+                android:fontFamily="monospace"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"
+                tools:text="Jab → Cross → L-Hook → Cross → L-Uppercut" />
+
+            <!-- Punch Count -->
+            <TextView
+                android:id="@+id/punchCountText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4 punches"
+                android:textSize="12sp"
+                android:textColor="@color/text_secondary"
+                android:fontFamily="monospace"
+                tools:text="5 punches" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView> 

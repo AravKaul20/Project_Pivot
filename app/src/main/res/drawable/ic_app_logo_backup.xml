@@ -1,0 +1,41 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    
+    <!-- Safe zone for adaptive icon (center 72dp of 108dp) -->
+    <!-- Icon content should be within 18dp margin on all sides -->
+    
+    <!-- Background circle -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M54,18 C72,18 88,34 88,54 C88,74 72,90 54,90 C36,90 20,74 20,54 C20,34 36,18 54,18 Z" />
+    
+    <!-- Eye outline (boxing eye shape) -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2"
+        android:fillColor="#000000"
+        android:pathData="M54,28 C68,28 80,38 80,54 C80,70 68,80 54,80 C40,80 28,70 28,54 C28,38 40,28 54,28 Z" />
+    
+    <!-- Boxing glove (centered and properly scaled) -->
+    <group
+        android:translateX="44"
+        android:translateY="44"
+        android:scaleX="1.4"
+        android:scaleY="1.4">
+        
+        <!-- Glove main body -->
+        <path
+            android:fillColor="#00FF88"
+            android:pathData="M9,0 C7,0 5,1 5,3 L5,9 C5,11 3,13 1,13 L1,16 C1,19 3,22 7,22 L12,22 C16,22 18,19 18,16 L18,6 C18,4 16,2 14,2 L11,2 C11,1 10,0 9,0 Z" />
+        
+        <!-- Glove strap -->
+        <path
+            android:fillColor="#00FF88"
+            android:pathData="M5,15 L18,15 L18,18 L5,18 Z" />
+            
+    </group>
+    
+</vector> 

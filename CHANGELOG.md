@@ -8,12 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Enhanced ML model with joint angle calculations
+- Geometric feature extraction for improved accuracy
+- Advanced pose analysis with multi-dimensional features
 - Comprehensive documentation and contribution guidelines
 - MIT License
 - Enhanced README with detailed setup instructions
 - Professional repository structure
 
 ### Changed
+- Upgraded feature extraction to include joint angles and geometric features
+- Enhanced model input processing for better boxing form analysis
 - Improved .gitignore for better Android development workflow
 - Updated repository structure for better organization
 

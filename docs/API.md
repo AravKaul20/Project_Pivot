@@ -122,8 +122,9 @@ public class OnnxModel {
 OnnxModel stanceModel = new OnnxModel();
 stanceModel.loadModel("stance_int8.onnx");
 
-float[] poseData = extractPoseFeatures(landmarks);
-float[] results = stanceModel.runInference(poseData);
+// Enhanced feature extraction with joint angles
+float[] enhancedFeatures = extractEnhancedFeatures(landmarks);
+float[] results = stanceModel.runInference(enhancedFeatures);
 float confidence = results[0];
 ```
 
@@ -141,13 +142,17 @@ public class MediaPipePoseDetector {
     }
     
     public void detectPose(ImageProxy image, PoseDetectionCallback callback);
-    public float[] extractFeatures(List<NormalizedLandmark> landmarks);
+    public float[] extractEnhancedFeatures(List<NormalizedLandmark> landmarks);
+    public float[] calculateJointAngles(List<NormalizedLandmark> landmarks);
+    public float[] extractGeometricFeatures(List<NormalizedLandmark> landmarks);
 }
 ```
 
 **Key Features:**
 - Real-time pose landmark detection
 - 33 pose landmarks with 3D coordinates
+- Advanced joint angle calculations
+- Geometric feature extraction (distances, ratios, orientations)
 - Optimized for mobile performance
 - Error handling and fallback mechanisms
 
@@ -273,18 +278,18 @@ public class ImageProcessor implements ImageAnalysis.Analyzer {
         
         // Detect pose landmarks
         poseDetector.detectPose(image, new PoseDetectionCallback() {
-            @Override
-            public void onPoseDetected(List<NormalizedLandmark> landmarks) {
-                // Extract features for ML models
-                float[] features = extractFeatures(landmarks);
-                
-                // Run inference
-                float[] stanceResults = stanceModel.runInference(features);
-                float[] executionResults = executionModel.runInference(features);
-                
-                // Update UI on main thread
-                runOnUiThread(() -> updatePredictions(stanceResults, executionResults));
-            }
+                         @Override
+             public void onPoseDetected(List<NormalizedLandmark> landmarks) {
+                 // Extract enhanced features including joint angles
+                 float[] enhancedFeatures = extractEnhancedFeatures(landmarks);
+                 
+                 // Run inference with enhanced feature set
+                 float[] stanceResults = stanceModel.runInference(enhancedFeatures);
+                 float[] executionResults = executionModel.runInference(enhancedFeatures);
+                 
+                 // Update UI on main thread
+                 runOnUiThread(() -> updatePredictions(stanceResults, executionResults));
+             }
         });
         
         image.close();
@@ -298,10 +303,15 @@ public class ImageProcessor implements ImageAnalysis.Analyzer {
 ```java
 public class PoseData {
     private List<NormalizedLandmark> landmarks;
-    private float[] features;
+    private float[] baseFeatures;
+    private float[] jointAngles;
+    private float[] geometricFeatures;
+    private float[] enhancedFeatures;
     private long timestamp;
     
-    public float[] extractFeatures();
+    public float[] extractEnhancedFeatures();
+    public float[] calculateJointAngles();
+    public float[] extractGeometricFeatures();
     public boolean isValidPose();
 }
 ```

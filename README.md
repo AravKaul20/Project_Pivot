@@ -57,7 +57,7 @@ The app displays:
 ### Models
 - **Stance Model**: `stance_int8.onnx` (113KB, >95% accuracy)
 - **Execution Model**: `execution_int8.onnx` (113KB, >95% accuracy)
-- **Input**: 28 features (14 pose keypoints × 2 coordinates)
+- **Input**: Enhanced feature set (pose keypoints + joint angles + geometric features)
 - **Output**: Binary classification (correct/incorrect) with confidence
 
 ### Components
@@ -197,7 +197,7 @@ adb shell top | grep project_pivot
 ### Training Dataset
 - **Stance**: 355 samples (196 correct, 159 incorrect)
 - **Execution**: 243 samples (118 correct, 125 incorrect)
-- **Format**: MediaPipe pose keypoints (28 features)
+- **Format**: Enhanced MediaPipe pose analysis with joint angles and geometric features
 - **Accuracy**: >95% validation accuracy
 
 ### Model Architecture

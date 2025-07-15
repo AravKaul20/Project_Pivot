@@ -57,9 +57,11 @@ public class MediaPipePoseDetector {
     
     private PoseLandmarker poseLandmarker;
     private boolean isInitialized = false;
+    private TemporalFeatureExtractor temporalExtractor;
     
     public MediaPipePoseDetector(Context context) {
         initializePoseLandmarker(context);
+        this.temporalExtractor = new TemporalFeatureExtractor();
     }
     
     private void initializePoseLandmarker(Context context) {
@@ -136,15 +138,39 @@ public class MediaPipePoseDetector {
         return keypoints;
     }
     
-    // Convert pose keypoints to the 28-feature format used by your models
-    public float[] keypointsToFeatures(List<PointF> keypoints, int imageWidth, int imageHeight) {
+    // Enhanced feature extraction with joint angles and geometric features
+    public float[] extractEnhancedFeatures(List<PointF> keypoints, int imageWidth, int imageHeight) {
         if (keypoints.size() < 33) {
             Log.w(TAG, "Not enough keypoints detected: " + keypoints.size());
-            return new float[28]; // Return zeros if not enough keypoints
+            return new float[getEnhancedFeatureSize()]; // Return zeros if not enough keypoints
         }
         
+        // Extract base pose features (normalized coordinates)
+        float[] baseFeatures = extractBasePoseFeatures(keypoints, imageWidth, imageHeight);
+        
+        // Extract joint angles
+        float[] jointAngles = JointAngleCalculator.calculateAllJointAngles(keypoints);
+        
+        // Extract geometric features
+        float[] geometricFeatures = GeometricFeatureExtractor.extractGeometricFeatures(keypoints);
+        
+        // Extract orientation features
+        float[] orientationFeatures = GeometricFeatureExtractor.extractOrientationFeatures(keypoints);
+        
+        // Combine all features
+        return combineFeatures(baseFeatures, jointAngles, geometricFeatures, orientationFeatures);
+    }
+    
+    // Legacy method for backward compatibility
+    public float[] keypointsToFeatures(List<PointF> keypoints, int imageWidth, int imageHeight) {
+        return extractEnhancedFeatures(keypoints, imageWidth, imageHeight);
+    }
+    
+    /**
+     * Extract base pose features (original 28 features for compatibility)
+     */
+    private float[] extractBasePoseFeatures(List<PointF> keypoints, int imageWidth, int imageHeight) {
         // Extract the 14 keypoints used in your training data
-        // These MUST match exactly what was used during model training
         int[] selectedKeypoints = {
             LEFT_SHOULDER, RIGHT_SHOULDER,     // 0, 1 - Shoulders
             LEFT_ELBOW, RIGHT_ELBOW,           // 2, 3 - Elbows
@@ -152,12 +178,12 @@ public class MediaPipePoseDetector {
             LEFT_HIP, RIGHT_HIP,               // 6, 7 - Hips
             LEFT_KNEE, RIGHT_KNEE,             // 8, 9 - Knees
             LEFT_ANKLE, RIGHT_ANKLE,           // 10, 11 - Ankles
-            LEFT_HEEL, RIGHT_HEEL              // 12, 13 - Heels (CORRECTED from nose/mouth)
+            LEFT_HEEL, RIGHT_HEEL              // 12, 13 - Heels
         };
         
         float[] features = new float[28]; // 14 keypoints * 2 coordinates
         
-        // First, extract raw coordinates
+        // Extract raw coordinates
         for (int i = 0; i < 14; i++) {
             if (selectedKeypoints[i] < keypoints.size()) {
                 PointF point = keypoints.get(selectedKeypoints[i]);
@@ -174,8 +200,14 @@ public class MediaPipePoseDetector {
             }
         }
         
-        // Apply statistical normalization EXACTLY like training data
-        // keypoints = (keypoints - keypoints.mean()) / (keypoints.std() + 1e-8)
+        // Apply statistical normalization
+        return normalizeFeatures(features);
+    }
+    
+    /**
+     * Normalize features using z-score normalization
+     */
+    private float[] normalizeFeatures(float[] features) {
         float mean = 0.0f;
         for (float value : features) {
             mean += value;
@@ -190,13 +222,101 @@ public class MediaPipePoseDetector {
         float std = (float) Math.sqrt(variance) + 1e-8f;
         
         // Apply normalization
+        float[] normalized = new float[features.length];
         for (int i = 0; i < features.length; i++) {
-            features[i] = (features[i] - mean) / std;
+            normalized[i] = (features[i] - mean) / std;
         }
         
-        // Feature extraction completed - debug logging removed for production
+        return normalized;
+    }
+    
+    /**
+     * Combine all feature arrays into a single enhanced feature vector
+     */
+    private float[] combineFeatures(float[]... featureArrays) {
+        int totalLength = 0;
+        for (float[] array : featureArrays) {
+            totalLength += array.length;
+        }
         
-        return features;
+        float[] combined = new float[totalLength];
+        int offset = 0;
+        
+        for (float[] array : featureArrays) {
+            System.arraycopy(array, 0, combined, offset, array.length);
+            offset += array.length;
+        }
+        
+        return combined;
+    }
+    
+    /**
+     * Extract enhanced features with temporal analysis
+     * @param keypoints Current frame keypoints
+     * @param imageWidth Image width
+     * @param imageHeight Image height
+     * @param includeTemporalFeatures Whether to include temporal features
+     * @return Enhanced feature vector with optional temporal features
+     */
+    public float[] extractEnhancedFeaturesWithTemporal(List<PointF> keypoints, int imageWidth, int imageHeight, boolean includeTemporalFeatures) {
+        if (keypoints.size() < 33) {
+            Log.w(TAG, "Not enough keypoints detected: " + keypoints.size());
+            return new float[getEnhancedFeatureSize(includeTemporalFeatures)];
+        }
+        
+        // Add current frame to temporal analysis
+        if (includeTemporalFeatures) {
+            temporalExtractor.addFrame(keypoints, System.currentTimeMillis());
+        }
+        
+        // Extract base features
+        float[] baseFeatures = extractBasePoseFeatures(keypoints, imageWidth, imageHeight);
+        float[] jointAngles = JointAngleCalculator.calculateAllJointAngles(keypoints);
+        float[] geometricFeatures = GeometricFeatureExtractor.extractGeometricFeatures(keypoints);
+        float[] orientationFeatures = GeometricFeatureExtractor.extractOrientationFeatures(keypoints);
+        
+        if (includeTemporalFeatures && temporalExtractor.getHistorySize() >= 2) {
+            // Extract temporal features
+            float[] velocityFeatures = temporalExtractor.extractVelocityFeatures();
+            float[] accelerationFeatures = temporalExtractor.extractAccelerationFeatures();
+            float[] movementPatterns = temporalExtractor.extractMovementPatterns();
+            
+            // Combine all features including temporal
+            return combineFeatures(baseFeatures, jointAngles, geometricFeatures, orientationFeatures, 
+                                 velocityFeatures, accelerationFeatures, movementPatterns);
+        } else {
+            // Return features without temporal analysis
+            return combineFeatures(baseFeatures, jointAngles, geometricFeatures, orientationFeatures);
+        }
+    }
+    
+    /**
+     * Get the total size of enhanced features
+     */
+    public int getEnhancedFeatureSize() {
+        return getEnhancedFeatureSize(false);
+    }
+    
+    /**
+     * Get the total size of enhanced features with optional temporal features
+     */
+    public int getEnhancedFeatureSize(boolean includeTemporalFeatures) {
+        int baseSize = 28 + 14 + 20 + 6; // base + joint angles + geometric + orientation = 68 features
+        
+        if (includeTemporalFeatures) {
+            baseSize += 10 + 5 + 8; // velocity + acceleration + movement patterns = 23 features
+        }
+        
+        return baseSize; // Total: 68 (without temporal) or 91 (with temporal)
+    }
+    
+    /**
+     * Reset temporal analysis (useful when starting a new session)
+     */
+    public void resetTemporalAnalysis() {
+        if (temporalExtractor != null) {
+            temporalExtractor.reset();
+        }
     }
     
     // Alternative method without statistical normalization - use this if the above doesn't work
@@ -246,6 +366,9 @@ public class MediaPipePoseDetector {
         if (poseLandmarker != null) {
             poseLandmarker.close();
             isInitialized = false;
+        }
+        if (temporalExtractor != null) {
+            temporalExtractor.reset();
         }
     }
     

@@ -415,6 +415,11 @@ public class MainActivity extends AppCompatActivity {
     
     @ExperimentalGetImage
     private void startCamera() {
+        // Reset temporal analysis when starting camera (new session)
+        if (poseDetector != null) {
+            poseDetector.resetTemporalAnalysis();
+        }
+        
         ListenableFuture<ProcessCameraProvider> cameraProviderFuture = 
             ProcessCameraProvider.getInstance(this);
         
@@ -477,7 +482,8 @@ public class MainActivity extends AppCompatActivity {
             
             if (poseDetector.isReady()) {
                 keypoints = poseDetector.detectPose(bitmap);
-                poseData = poseDetector.keypointsToFeatures(keypoints, bitmap.getWidth(), bitmap.getHeight());
+                // Use enhanced features with temporal analysis for better accuracy
+                poseData = poseDetector.extractEnhancedFeaturesWithTemporal(keypoints, bitmap.getWidth(), bitmap.getHeight(), true);
             } else {
                 // Use fallback detector if MediaPipe is not ready
                 keypoints = fallbackPoseDetector.detectPose(bitmap);
